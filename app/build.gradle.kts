@@ -78,6 +78,14 @@ android {
             isMinifyEnabled = false
         }
         getByName("release") {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            ndk.debugSymbolLevel = "FULL"
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt),
+                "proguard-rules.pro"
+            )
+
             signingConfig = signingConfigs.runCatching { getByName("release") }
                 .getOrNull()
                 .takeIf { it?.storeFile != null }
@@ -104,6 +112,10 @@ android {
         }
     }
 
+    flavorDimensions.add("version")
+    productFlavors {
+        
+    }
 
     packaging {
         jniLibs {
